@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package userservice;
+
+// Определяем сообщение запроса
+message GetCourseRequest {
+    string course_id = 1;
+}
+
+// Определяем сообщение ответа
+message GetCourseResponse {
+    // идентификатор курса.
+    string course_id = 2;
+    // название курса.
+    string title = 3;
+    // описание курса.
+    string description = 4;
+}
+
+// Определяем gRPC-сервис
+service CourseService {
+    // Определяем метод gRPC-сервиса
+    rpc GetCourse (GetCourseRequest) returns (GetCourseResponse);
+}
