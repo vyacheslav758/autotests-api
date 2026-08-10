@@ -19,10 +19,11 @@ def get_private_http_client(user: AuthenticationUserDict) -> Client:
     # Инициализируем AuthenticationClient для аутентификации
     authentication_client = get_authentication_client()
     login_request = LoginRequestDict(email=user['email'], password=user['password'])
-    login_response = authentication_client.login_api(login_request)
+    login_response = authentication_client.login_api(login_request).json()
+    login_token = login_response['token']['accessToken']
     return Client(
         timeout=100,
         base_url="http://localhost:8000",
         # Добавляем заголовок авторизации
-        headers={"Authorization": f"Bearer {login_response['token']['accessToken']}"}
+        headers={"Authorization": f"Bearer {login_token}"}
     )
