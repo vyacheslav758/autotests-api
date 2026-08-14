@@ -56,7 +56,6 @@ class ExercisesClient(APIClient):
 
     def create_exercise(self, request: PostCreateExerciseRequestSchema) -> GetCreateExerciseResponseSchema:
         response = self.create_exercise_api(request)
-        print("Hello ", response.json())
         return GetCreateExerciseResponseSchema.model_validate_json(response.text)
 
     def update_exercise(self, exercise_id: str,

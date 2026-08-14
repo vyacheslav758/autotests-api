@@ -1,5 +1,7 @@
 from pydantic import BaseModel, ConfigDict, Field
 
+from tools.fakers import fake
+
 
 class GetExercisesQuerySchema(BaseModel):
     """
@@ -7,7 +9,7 @@ class GetExercisesQuerySchema(BaseModel):
     """
     model_config = ConfigDict(populate_by_name=True)
 
-    courseId: str  = Field(alias="courseId")
+    course_id: str = Field(alias="courseId")
 
 
 class ExerciseSchema(BaseModel):
@@ -50,13 +52,13 @@ class PostCreateExerciseRequestSchema(BaseModel):
     """
     model_config = ConfigDict(populate_by_name=True)
 
-    title: str
-    course_id: str = Field(alias="courseId")
-    min_score: int = Field(alias="minScore")
-    max_score: int = Field(alias="maxScore")
-    order_index: int = Field(alias="orderIndex")
-    description: str
-    estimated_time: str = Field(alias="estimatedTime")
+    title: str = Field(default_factory=fake.text)
+    course_id: str = Field(alias="courseId", default_factory=fake.uuid4)
+    min_score: int = Field(alias="minScore", default_factory=fake.min_score)
+    max_score: int = Field(alias="maxScore", default_factory=fake.max_score)
+    order_index: int = Field(alias="orderIndex", default_factory=fake.integer)
+    description: str = Field(default_factory=fake.text)
+    estimated_time: str = Field(alias="estimatedTime", default_factory=fake.estimated_time)
 
 
 class PatchUpdateExerciseRequestSchema(BaseModel):
@@ -65,9 +67,10 @@ class PatchUpdateExerciseRequestSchema(BaseModel):
     """
     model_config = ConfigDict(populate_by_name=True)
 
-    title: str
-    min_score: int = Field(alias="minScore")
-    max_score: int = Field(alias="maxScore")
-    order_index: int = Field(alias="orderIndex")
-    description: str
-    estimated_time: str = Field(alias="estimatedTime")
+    title: str = Field(default_factory=fake.text)
+    min_score: int = Field(alias="minScore", default_factory=fake.min_score)
+    max_score: int = Field(alias="maxScore", default_factory=fake.max_score)
+    order_index: int = Field(alias="orderIndex", default_factory=fake.integer)
+    description: str = Field(default_factory=fake.text())
+    estimated_time: str = Field(alias="estimatedTime", default_factory=fake.estimated_time)
+
